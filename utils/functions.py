@@ -25,7 +25,7 @@ def prepare_data(df, target_prefix='target__', id_col='user_id'):
     print(f"Found target columns: {target_cols}")
     print(f"Feature columns count: {len(feature_cols)}")
 
-    X = df[feature_cols].apply(pd.to_numeric, errors='coerce').fillna(0).replace([np.inf, -np.inf], 0).values
+    X = df[feature_cols].apply(pd.to_numeric, errors='coerce').replace([np.inf, -np.inf], np.nan).values
     y = df[target_cols].fillna(0).replace([np.inf, -np.inf], 0).values.astype(np.float32)
 
     print(f"X shape: {X.shape}, y shape: {y.shape}")
