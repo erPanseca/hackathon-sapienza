@@ -23,6 +23,19 @@ id_col = "user_id"
 
 # here must be the code to divide train / val / test / forget sets
 
+forget_df = pd.read_csv(os.path.join(folder_path, 'forget_data.csv'), sep=";")
+test_df = pd.read_csv(os.path.join(folder_path, 'test_data.csv'), sep=";")
+
+
+train_df, val_df = train_test_split(df_all, test_size=0.15, random_state=random_seed)
+
+print(f"Dimension-> Train: {len(train_df)}, Forget: {len(forget_df)}, Val: {len(val_df)}, Test: {len(test_df)}")
+
+# Generate validation file for the competition
+val_df[[id_col]].to_csv('validation_ids.csv', index=False)
+print("✅ File 'validation_ids.csv' generato.")
+
+
 
 X_train, y_train, feature_cols, target_cols = uf.prepare_data(train_df, id_col=id_col, target_prefix='target__') # careful! here the train is not the real train set
 
